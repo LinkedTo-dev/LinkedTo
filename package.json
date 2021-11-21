@@ -1,0 +1,43 @@
+{
+  "name": "gatsby",
+  "version": "5.0.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "latest",
+    "@emotion/server": "latest",
+    "@emotion/styled": "latest",
+    "@mui/icons-material": "^5.1.1",
+    "@mui/material": "latest",
+    "gatsby": "latest",
+    "gatsby-plugin-react-helmet": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-helmet": "latest"
+  },
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "lint": "eslint ./ --ignore-path .gitignore --fix",
+    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true",
+      "pre-commit": "yarn run lint"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "devDependencies": {
+    "commitizen": "^4.2.4",
+    "eslint": "^8.2.0",
+    "eslint-plugin-react": "^7.27.1",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "husky": "^7.0.4"
+  }
+}
