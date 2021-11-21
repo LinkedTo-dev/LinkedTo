@@ -1,38 +1,58 @@
-# Gatsby example
+# LinkedTo
 
-## How to use
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-Download the example [or clone the repo](https://github.com/mui-org/material-ui):
 
-<!-- #default-branch-switch -->
+## Tech
 
+Use the [Gatsby example of @mui-org/material-ui](https://github.com/mui-org/material-ui/tree/master/examples/gatsby)
+
+Login Page uses the template of [Sign-in Side Template](https://github.com/mui-org/material-ui/tree/master/docs/src/pages/getting-started/templates/sign-in-side)
+
+Add [ESLint](https://eslint.org/) for to check syntax, find problems, and enforce code style.
+
+Use [Commitizen](https://commitizen-tools.github.io/commitizen/) along with [Husky](https://typicode.github.io/husky/#/) for better commit message with `pre-commit` hook.
+
+## Usage
+
+### Clone this repo
 ```sh
-curl https://codeload.github.com/mui-org/material-ui/tar.gz/master | tar -xz --strip=2  material-ui-master/examples/gatsby
-cd gatsby
+git clone git@github.com:LinkedTo-dev/LinkedTo.git
+cd LinkedTo
 ```
 
-Install it and run:
-
+### Install the dependencies
 ```sh
-npm install
-npm run develop
+yarn install
 ```
 
-or:
+### Start a dev server
+```sh
+yarn run develop
+```
 
-<!-- #default-branch-switch -->
+### For production build
+```sh
+yarn run build
+```
 
-[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/mui-org/material-ui/tree/master/examples/gatsby)
+### When commit
 
-## The idea behind the example
+Use
 
-The project uses [Gatsby](https://github.com/gatsbyjs/gatsby), which is a static site generator for React.
-It includes `@mui/material` and its peer dependencies, including `emotion`, the default style engine in MUI v5.
-If you prefer, you can [use styled-components instead](https://mui.com/guides/interoperability/#styled-components).
+```sh
+git cz
+```
 
-## What's next?
+instead of
 
-<!-- #default-branch-switch -->
+```sh
+git commit
+```
 
-You now have a working example project.
-You can head back to the documentation, continuing browsing it from the [templates](https://mui.com/getting-started/templates/) section.
+to generate better commit messages.
+
+*(Perhaps you need to globally install `cz-cli` to enjoy full commitizen support)*
+```sh
+yarn global add cz-cli
+```
