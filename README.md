@@ -53,6 +53,3 @@ git commit
 to generate better commit messages.
 
 *(Perhaps you need to globally install `cz-cli` to enjoy full commitizen support)*
-```sh
-yarn global add cz-cli
-```
