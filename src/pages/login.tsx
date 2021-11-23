@@ -12,8 +12,9 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { navigate } from 'gatsby-link';
 
-function Copyright(props: any) {
+function Copyright(props) {
   return (
     <Typography
       variant='body2'
@@ -34,15 +35,19 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignInSide() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    // const data = new FormData(event.currentTarget);
+    // // eslint-disable-next-line no-console
+    // console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
+    navigate('/');
   };
+
+  // eslint-disable-next-line quotes
+  const signInHint = "Don't have an account? Sign Up";
 
   return (
     <ThemeProvider theme={theme}>
@@ -111,7 +116,7 @@ export default function SignInSide() {
                 label='Remember me'
               />
               <Button
-                type='submit'
+                onClick={handleSubmit}
                 fullWidth
                 variant='contained'
                 sx={{ mt: 3, mb: 2 }}
@@ -126,7 +131,7 @@ export default function SignInSide() {
                 </Grid>
                 <Grid item>
                   <Link href='#' variant='body2'>
-                    {"Don't have an account? Sign Up"}
+                    {signInHint}
                   </Link>
                 </Grid>
               </Grid>

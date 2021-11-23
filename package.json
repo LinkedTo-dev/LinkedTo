@@ -8,11 +8,13 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "^5.1.1",
     "@mui/material": "latest",
+    "@types/recharts": "^1.8.23",
     "gatsby": "latest",
     "gatsby-plugin-react-helmet": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-helmet": "latest"
+    "react-helmet": "latest",
+    "recharts": "^2.1.6"
   },
   "scripts": {
     "develop": "gatsby develop",
@@ -33,11 +35,11 @@
     }
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
     "commitizen": "^4.2.4",
     "eslint": "^8.2.0",
     "eslint-plugin-react": "^7.27.1",
-    "@typescript-eslint/eslint-plugin": "latest",
-    "@typescript-eslint/parser": "latest",
     "husky": "^7.0.4"
   }
 }
