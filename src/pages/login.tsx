@@ -23,8 +23,8 @@ function Copyright(props) {
       {...props}
     >
       {'Copyright © '}
-      <Link color='inherit' href='https://mui.com/'>
-        Your Website
+      <Link color='inherit' href='/'>
+        LinkedTo
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -32,7 +32,11 @@ function Copyright(props) {
   );
 }
 
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 export default function SignInSide() {
   const handleSubmit = (event) => {

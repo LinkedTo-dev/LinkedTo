@@ -23,6 +23,7 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
+import ProductionMap from './ProductionMap';
 
 function Copyright(props) {
   return (
@@ -33,8 +34,8 @@ function Copyright(props) {
       {...props}
     >
       {'Copyright © '}
-      <Link color='inherit' href='https://mui.com/'>
-        Your Website
+      <Link color='inherit' href='/'>
+        LinkedTo
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -92,7 +93,11 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-const mdTheme = createTheme();
+const mdTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
@@ -176,6 +181,18 @@ function DashboardContent() {
           <Toolbar />
           <Container maxWidth='lg' sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 560,
+                  }}
+                >
+                  <ProductionMap />
+                </Paper>
+              </Grid>
               {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>
                 <Paper

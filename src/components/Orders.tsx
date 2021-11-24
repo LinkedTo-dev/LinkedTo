@@ -10,48 +10,36 @@ import Title from './Title';
 // Generate Order Data
 function createData(
   id: number,
-  date: string,
-  name: string,
-  shipTo: string,
-  paymentMethod: string,
-  amount: number,
+  title: string,
+  date: Date,
+  field: string,
+  type: string
 ) {
-  return { id, date, name, shipTo, paymentMethod, amount };
+  return { id, title, date: date.toLocaleDateString(), field, type };
 }
 
 const rows = [
-  createData(
-    0,
-    '16 Mar, 2019',
-    'Elvis Presley',
-    'Tupelo, MS',
-    'VISA ⠀•••• 3719',
-    312.44,
-  ),
+  createData(0, '协同优化算法', new Date(2011, 2, 3), 'Optimization', '百科'),
   createData(
     1,
-    '16 Mar, 2019',
-    'Paul McCartney',
-    'London, UK',
-    'VISA ⠀•••• 2574',
-    866.99,
+    ' On the Role of Robustness in Multi-Objective Robust Optimization: Application to an IPM Motor Design Problem',
+    new Date(2012, 0, 1),
+    'Optimization',
+    '期刊文献'
   ),
-  createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
+  createData(
+    2,
+    'Camera calibration with genetic algorithms',
+    new Date(2018, 10, 14),
+    'Genetic Algorithms',
+    '期刊文献'
+  ),
   createData(
     3,
-    '16 Mar, 2019',
-    'Michael Jackson',
-    'Gary, IN',
-    'AMEX ⠀•••• 2000',
-    654.39,
-  ),
-  createData(
-    4,
-    '15 Mar, 2019',
-    'Bruce Springsteen',
-    'Long Branch, NJ',
-    'VISA ⠀•••• 5919',
-    212.79,
+    'High-speed line scanning confocal microscope for biological imaging',
+    new Date(2020, 10, 18),
+    'Biological Cells',
+    '期刊文献'
   ),
 ];
 
@@ -62,31 +50,33 @@ function preventDefault(event: React.MouseEvent) {
 export default function Orders() {
   return (
     <React.Fragment>
-      <Title>Recent Orders</Title>
-      <Table size="small">
+      <Title>Related Articles</Title>
+      <Table size='small'>
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
-            <TableCell>Payment Method</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
+            <TableCell>标题</TableCell>
+            <TableCell>发布日期</TableCell>
+            <TableCell>领域</TableCell>
+            <TableCell>分类</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.id}>
+              <TableCell>
+                <Link href='#' onClick={preventDefault}>
+                  {row.title}
+                </Link>
+              </TableCell>
               <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{`$${row.amount}`}</TableCell>
+              <TableCell>{row.field}</TableCell>
+              <TableCell>{row.type}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more orders
+      <Link color='primary' href='#' onClick={preventDefault} sx={{ mt: 3 }}>
+        See more articles...
       </Link>
     </React.Fragment>
   );
