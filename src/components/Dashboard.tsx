@@ -13,17 +13,16 @@ import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import LoginIcon from '@mui/icons-material/Login';
-import { mainListItems, secondaryListItems } from './listItems';
-import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
-import ProductionMap from './ProductionMap';
+// import { mainListItems, secondaryListItems } from './listItems';
+import DashboardBox from './DashboardBox';
+import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { AnchorLink } from 'gatsby-plugin-anchor-links';
+import staticData, { IndTypes } from './static';
 
 function Copyright(props) {
   return (
@@ -99,7 +98,7 @@ const mdTheme = createTheme({
   },
 });
 
-function DashboardContent() {
+function DashboardContent({ mainList, secondaryList, children }) {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -107,9 +106,9 @@ function DashboardContent() {
 
   return (
     <ThemeProvider theme={mdTheme}>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex', scrollMarginTop: 64 }}>
         <CssBaseline />
-        <AppBar position='absolute' open={open}>
+        <AppBar position='fixed' open={open}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
@@ -134,7 +133,7 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              LinkedTo
             </Typography>
             <IconButton color='inherit'>
               <Badge badgeContent={4} color='secondary'>
@@ -162,9 +161,9 @@ function DashboardContent() {
             </IconButton>
           </Toolbar>
           <Divider />
-          <List>{mainListItems}</List>
+          <List>{mainList}</List>
           <Divider />
-          <List>{secondaryListItems}</List>
+          <List>{secondaryList}</List>
         </Drawer>
         <Box
           component='main'
@@ -179,52 +178,9 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth='lg' sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth='xl' sx={{ mt: 8, mb: 4 }}>
             <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 560,
-                  }}
-                >
-                  <ProductionMap />
-                </Paper>
-              </Grid>
-              {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Chart />
-                </Paper>
-              </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Deposits />
-                </Paper>
-              </Grid>
-              {/* Recent Orders */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
-                </Paper>
-              </Grid>
+              {children}
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>
@@ -235,5 +191,27 @@ function DashboardContent() {
 }
 
 export default function Dashboard() {
-  return <DashboardContent />;
+  const [indType, setIndType] = React.useState(0);
+
+  const mainList = IndTypes.map(({ id, label, icon }) => (
+    <ListItemButton key={id} onClick={() => setIndType(id)}>
+      <ListItemIcon>{icon}</ListItemIcon>
+      <ListItemText primary={label} />
+    </ListItemButton>
+  ));
+
+  // const Anchor = ({ name }) => <AnchorLink to={`/#${name}`}></AnchorLink>;
+
+  const secondaryList = staticData.map(({ title, name, icon }) => (
+    <ListItemButton key={name} component={AnchorLink} to={`#${name}`}>
+      {icon && <ListItemIcon>{icon}</ListItemIcon>}
+      <ListItemText primary={title} />
+    </ListItemButton>
+  ));
+
+  return (
+    <DashboardContent mainList={mainList} secondaryList={secondaryList}>
+      <DashboardBox type={indType} data={staticData} />
+    </DashboardContent>
+  );
 }
