@@ -33,15 +33,8 @@ export default function Chart() {
   return (
     <React.Fragment>
       <Title>Today</Title>
-      <ResponsiveContainer>
         <LineChart
           data={data}
-          margin={{
-            top: 16,
-            right: 16,
-            bottom: 0,
-            left: 24,
-          }}
         >
           <XAxis
             dataKey='time'
@@ -72,7 +65,6 @@ export default function Chart() {
             dot={false}
           />
         </LineChart>
-      </ResponsiveContainer>
     </React.Fragment>
   );
 }
