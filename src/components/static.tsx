@@ -1,5 +1,6 @@
 import React from 'react';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import Map from './Map';
 
 interface PageDataProp {
   title: string;
@@ -17,7 +18,7 @@ const staticData: PageDataProp[] = [
   {
     title: '产业地图',
     name: 'map',
-    component: temp,
+    component: <Map />,
     grid: { xs: 12 },
     icon: <DashboardIcon />,
   },
