@@ -1,7 +1,8 @@
 import React from 'react';
 import { Card, Grid, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { IndTypes } from './static';
+
+export const typeContext = React.createContext<number>(0);
 
 const useStyles = makeStyles(() => ({
   anchor: {
@@ -29,16 +30,13 @@ const DashboardComponent = ({ title, name, children }) => {
   );
 };
 
-const DashboardBox = ({ type, data }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const DashboardBox = ({ type, data }: { type: number; data: any }) => {
   const paperStyle = {
     width: '100%',
     minHeight: '80vh',
     alignContent: 'flex-start',
   };
-
-  const { name, label } = IndTypes[type];
-  console.log(name, label);
-  // TODO: fetch data by type/name/label
 
   const content = data.map(({ title, name, grid, component }) => (
     <Grid key={name} item {...grid}>
@@ -50,7 +48,7 @@ const DashboardBox = ({ type, data }) => {
 
   return (
     <Grid container style={paperStyle} spacing={3}>
-      {content}
+      <typeContext.Provider value={type}>{content}</typeContext.Provider>
     </Grid>
   );
 };

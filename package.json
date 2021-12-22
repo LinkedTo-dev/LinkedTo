@@ -11,6 +11,8 @@
     "@mui/material": "latest",
     "@mui/styles": "^5.2.3",
     "@types/recharts": "^1.8.23",
+    "axios": "^0.24.0",
+    "echarts": "^5.2.2",
     "gatsby": "latest",
     "gatsby-plugin-anchor-links": "^1.2.1",
     "gatsby-plugin-react-helmet": "latest",
