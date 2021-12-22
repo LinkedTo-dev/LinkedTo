@@ -2,6 +2,7 @@ import React from 'react';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import {Statistics} from './Statistics';
 import Map from './Map';
+import Specialst from './Specialist';
 
 interface PageDataProp {
   title: string;
@@ -42,6 +43,13 @@ const staticData: PageDataProp[] = [
     name: 'statistics',
     component: <Statistics />,
     grid: {xs: 12, sm: 6},
+    icon: <DashboardIcon />
+  },
+  {
+    title: '产业专家',
+    name: 'specialist',
+    component: <Specialst />,
+    grid: {xs: 12},
     icon: <DashboardIcon />
   }
 ];

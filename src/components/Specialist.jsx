@@ -35,7 +35,7 @@ export default function Specialist() {
 
   return (
     <div>
-    <ImageList sx={{ width: 900, height: 450 }} cols={3}>
+    <ImageList sx={{ width: 1000, height: 350 }} cols={3}>
       {data.map((item) => (
         <ImageListItem key={item.img}>
           <img
