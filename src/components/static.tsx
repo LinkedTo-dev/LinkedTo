@@ -1,5 +1,8 @@
 import React from 'react';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import Trends from './Trends';
+import Policy from './Policy';
+import DataStat from './DataStat';
 
 interface PageDataProp {
   title: string;
@@ -24,14 +27,21 @@ const staticData: PageDataProp[] = [
   {
     title: '产业动态',
     name: 'news',
-    component: temp,
+    component: <Trends />,
     grid: { xs: 12, sm: 6 },
     icon: <DashboardIcon />,
   },
   {
     title: '产业政策',
     name: 'policy',
-    component: <>C component!</>,
+    component: <Policy/>,
+    grid: { xs: 12, sm: 6 },
+    icon: <DashboardIcon />,
+  },
+  {
+    title: '产值展示',
+    name: 'policy',
+    component: <DataStat />,
     grid: { xs: 12, sm: 6 },
     icon: <DashboardIcon />,
   },
