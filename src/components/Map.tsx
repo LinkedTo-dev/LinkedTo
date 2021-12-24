@@ -64,7 +64,9 @@ const ChinaMap = () => {
   useEffect(() => {
     (async () => {
       try {
-        setData(await fetchData('/map', { type }));
+        const x = await fetchData<any>('/news', { type });
+        console.log(x);
+        setData(x);
       } catch (e) {
         //TODO: handle exception
       }
