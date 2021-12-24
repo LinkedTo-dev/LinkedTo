@@ -9,20 +9,24 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import SearchIcon from '@mui/icons-material/Search';
 
 import {typeContext} from './DashboardBox';
+import { IndTypes } from './static';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const data = require('../../mock/specialist.json');
-
 export default function Specialist() {
-  // const type = React.useContext(typeContext);
+  const type = React.useContext(typeContext);
+  const data = require('../../mock/specialist.json').filter((item) => item.industryType === IndTypes[type].name);
 
   const [open, setOpen] = React.useState(false);
   const [intro, setIntro] = React.useState('');
+  const [filterData, setFilterData] = React.useState(data);
 
   const handleClickOpen = (msg) => {
     setOpen(true);
@@ -33,14 +37,28 @@ export default function Specialist() {
     setOpen(false);
   };
 
+  const handleSearch = (value) => {
+    var result = [];
+    data.map(item => {
+      if (item.name.indexOf(value) !== -1) {
+        result.push(item);
+      }
+    });
+    setFilterData(result);
+  }
+
   return (
     <div>
-    <ImageList sx={{ width: 1000, height: 350 }} cols={3}>
-      {data.map((item) => (
+    <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+      <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+      <TextField id="outlined-basic" label="Name" variant="outlined" onChange={(e) => handleSearch(e.target.value)}/>
+    </Box>
+    <ImageList sx={{ width: "100%", height: 470 }} cols={5}>
+      {filterData.map((item) => (
         <ImageListItem key={item.img}>
           <img
-            src={`${'https://i.ytimg.com/vi/pLqipJNItIo/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLBkklsyaw9FxDmMKapyBYCn9tbPNQ'}?w=248&fit=crop&auto=format`}
-            srcSet={`${'https://i.ytimg.com/vi/pLqipJNItIo/hqdefault.jpg?sqp=-oaymwEYCNIBEHZIVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLBkklsyaw9FxDmMKapyBYCn9tbPNQ'}?w=248&fit=crop&auto=format&dpr=2 2x`}
+            src={`${item.source}?w=248&fit=crop&auto=format`}
+            srcSet={`${item.source}?w=248&fit=crop&auto=format&dpr=2 2x`}
             alt={item.name}
             loading="lazy"
           />
