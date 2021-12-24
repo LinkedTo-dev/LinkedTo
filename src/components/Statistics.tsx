@@ -1,144 +1,11 @@
 import * as React from 'react';
+import { useEffect, useContext } from 'react';
+import { typeContext } from './DashboardBox';
 import { ToggleButtonGroup, ToggleButton, Paper, Divider } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { PieChart, Pie, Sector, BarChart, Bar, Cell, 
         XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
-
-const mockData = [
-    {"province":"AH","count_type":"enterprise","count":11},
-    {"province":"AH","count_type":"park","count":1},
-    {"province":"AH","count_type":"association","count":3},
-    {"province":"BJ","count_type":"enterprise","count":447},
-    {"province":"BJ","count_type":"park","count":4},
-    {"province":"BJ","count_type":"association","count":7},
-    {"province":"CQ","count_type":"enterprise","count":3},
-    {"province":"CQ","count_type":"park","count":0},
-    {"province":"CQ","count_type":"association","count":1},
-    {"province":"FJ","count_type":"enterprise","count":22},
-    {"province":"FJ","count_type":"park","count":0},
-    {"province":"FJ","count_type":"association","count":2},
-    {"province":"GD","count_type":"enterprise","count":246},
-    {"province":"GD","count_type":"park","count":5},
-    {"province":"GD","count_type":"association","count":8},
-    {"province":"GS","count_type":"enterprise","count":0},
-    {"province":"GS","count_type":"park","count":0},
-    {"province":"GS","count_type":"association","count":0},
-    {"province":"GZ","count_type":"enterprise","count":2},
-    {"province":"GZ","count_type":"park","count":0},
-    {"province":"GZ","count_type":"association","count":0},
-    {"province":"GX","count_type":"enterprise","count":2},
-    {"province":"GX","count_type":"park","count":0},
-    {"province":"GX","count_type":"association","count":1},
-    {"province":"HA","count_type":"enterprise","count":10},
-    {"province":"HA","count_type":"park","count":0},
-    {"province":"HA","count_type":"association","count":1},
-    {"province":"HB","count_type":"enterprise","count":17},
-    {"province":"HB","count_type":"park","count":1},
-    {"province":"HB","count_type":"association","count":3},
-    {"province":"HE","count_type":"enterprise","count":19},
-    {"province":"HE","count_type":"park","count":1},
-    {"province":"HE","count_type":"association","count":3},
-    {"province":"HI","count_type":"enterprise","count":0},
-    {"province":"HI","count_type":"park","count":0},
-    {"province":"HI","count_type":"association","count":0},
-    {"province":"HL","count_type":"enterprise","count":2},
-    {"province":"HL","count_type":"park","count":0},
-    {"province":"HL","count_type":"association","count":0},
-    {"province":"HN","count_type":"enterprise","count":3},
-    {"province":"HN","count_type":"park","count":0},
-    {"province":"HN","count_type":"association","count":1},
-    {"province":"JL","count_type":"enterprise","count":1},
-    {"province":"JL","count_type":"park","count":0},
-    {"province":"JL","count_type":"association","count":0},
-    {"province":"JS","count_type":"enterprise","count":59},
-    {"province":"JS","count_type":"park","count":2},
-    {"province":"JS","count_type":"association","count":3},
-    {"province":"JX","count_type":"enterprise","count":3},
-    {"province":"JX","count_type":"park","count":0},
-    {"province":"JX","count_type":"association","count":0},
-    {"province":"LN","count_type":"enterprise","count":10},
-    {"province":"LN","count_type":"park","count":0},
-    {"province":"LN","count_type":"association","count":1},
-    {"province":"NM","count_type":"enterprise","count":0},
-    {"province":"NM","count_type":"park","count":0},
-    {"province":"NM","count_type":"association","count":0},
-    {"province":"NX","count_type":"enterprise","count":0},
-    {"province":"NX","count_type":"park","count":0},
-    {"province":"NX","count_type":"association","count":0},
-    {"province":"QH","count_type":"enterprise","count":0},
-    {"province":"QH","count_type":"park","count":0},
-    {"province":"QH","count_type":"association","count":0},
-    {"province":"SC","count_type":"enterprise","count":46},
-    {"province":"SC","count_type":"park","count":2},
-    {"province":"SC","count_type":"association","count":3},
-    {"province":"SD","count_type":"enterprise","count":10},
-    {"province":"SD","count_type":"park","count":0},
-    {"province":"SD","count_type":"association","count":1},
-    {"province":"SH","count_type":"enterprise","count":168},
-    {"province":"SH","count_type":"park","count":3},
-    {"province":"SH","count_type":"association","count":4},
-    {"province":"SN","count_type":"enterprise","count":8},
-    {"province":"SN","count_type":"park","count":0},
-    {"province":"SN","count_type":"association","count":1},
-    {"province":"SX","count_type":"enterprise","count":2},
-    {"province":"SX","count_type":"park","count":0},
-    {"province":"SX","count_type":"association","count":1},
-    {"province":"TJ","count_type":"enterprise","count":12},
-    {"province":"TJ","count_type":"park","count":1},
-    {"province":"TJ","count_type":"association","count":2},
-    {"province":"TW","count_type":"enterprise","count":1},
-    {"province":"TW","count_type":"park","count":0},
-    {"province":"TW","count_type":"association","count":1},
-    {"province":"XJ","count_type":"enterprise","count":1},
-    {"province":"XJ","count_type":"park","count":0},
-    {"province":"XJ","count_type":"association","count":0},
-    {"province":"XZ","count_type":"enterprise","count":1},
-    {"province":"XZ","count_type":"park","count":0},
-    {"province":"XZ","count_type":"association","count":0},
-    {"province":"YN","count_type":"enterprise","count":0},
-    {"province":"YN","count_type":"park","count":0},
-    {"province":"YN","count_type":"association","count":0},
-    {"province":"ZJ","count_type":"enterprise","count":156},
-    {"province":"ZJ","count_type":"park","count":5},
-    {"province":"ZJ","count_type":"association","count":8},
-    {"province":"HK","count_type":"enterprise","count":3},
-    {"province":"HK","count_type":"park","count":0},
-    {"province":"HK","count_type":"association","count":1},
-    {"province":"MO","count_type":"enterprise","count":1},
-    {"province":"MO","count_type":"park","count":0},
-    {"province":"MO","count_type":"association","count":0}
-]
-
-const getData = (allData: Array<object>) => {
-  const overall_data = new Map();
-  const max_data = new Map();
-  max_data.set('park', 0);
-  max_data.set('enterprise', 0);
-  max_data.set('association', 0);
-  const park_data = new Array();
-  const enterprise_data = new Array();
-  const assoc_data = new Array();
-  for (let i = 0; i < allData.length; i++){
-    if (allData[i]['count_type'] === 'park'){
-      park_data.push({province: allData[i]['province'], count: allData[i]['count']});
-      if (allData[i]['count'] > max_data.get('park')) 
-        max_data.set('park', allData[i]['count']);
-    } else if (allData[i]['count_type'] === 'enterprise'){
-      enterprise_data.push({province: allData[i]['province'], count: allData[i]['count']});
-      if (allData[i]['count'] > max_data.get('enterprise')) 
-        max_data.set('enterprise', allData[i]['count']);
-    } else {
-      assoc_data.push({province: allData[i]['province'], count: allData[i]['count']});
-      if (allData[i]['count'] > max_data.get('association')) 
-        max_data.set('association', allData[i]['count']);
-    }
-  }
-  overall_data.set('park', park_data);
-  overall_data.set('enterprise', enterprise_data);
-  overall_data.set('association', assoc_data);
-  console.log('parsed_data');
-  return {overall_data, max_data};
-}
+import { fetchData } from '../utils/fetch';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
@@ -188,12 +55,53 @@ const renderActiveShape = (props) => {
   );
 };
 
-const {overall_data, max_data} = getData(mockData);
-
 export const Statistics = () => {
+  const getData = async () => {
+    const allData = await fetchData<Array<object>>('/mapStatistic', {type});
+    console.log(allData);
+    const overall_data = new Map();
+    const max_data = new Map();
+    max_data.set('park', 0);
+    max_data.set('enterprise', 0);
+    max_data.set('association', 0);
+    const park_data = [];
+    const enterprise_data = [];
+    const assoc_data = [];
+    for (let i = 0; i < allData.length; i++){
+      if (allData[i]['countType'] === 'park'){
+        park_data.push({province: allData[i]['province'], count: parseInt(allData[i]['count'])});
+        if (allData[i]['count'] > max_data.get('park')) 
+          max_data.set('park', parseInt(allData[i]['count']));
+      } else if (allData[i]['countType'] === 'enterprise'){
+        enterprise_data.push({province: allData[i]['province'], count: parseInt(allData[i]['count'])});
+        if (allData[i]['count'] > max_data.get('enterprise')) 
+          max_data.set('enterprise', parseInt(allData[i]['count']));
+      } else {
+        assoc_data.push({province: allData[i]['province'], count: parseInt(allData[i]['count'])});
+        if (allData[i]['count'] > max_data.get('association')) 
+          max_data.set('association', parseInt(allData[i]['count']));
+      }
+    }
+    overall_data.set('park', park_data);
+    overall_data.set('enterprise', enterprise_data);
+    overall_data.set('association', assoc_data);
+    return {overall_data, max_data};
+  }
+
+  const type = useContext(typeContext);
   const [DataType, setDataType] = React.useState('enterprise');
   const [activeIndex, setactiveIndex] = React.useState(0);
   const [ChartType, setChartType] = React.useState('PieChart');
+  const init_overall_data = new Map();
+  init_overall_data.set('park', []);
+  init_overall_data.set('enterprise', []);
+  init_overall_data.set('association', []);
+  const [OverallData, setOverallData] = React.useState(init_overall_data);
+  var init_max_data = new Map();
+  init_max_data.set('park', 0);
+  init_max_data.set('enterprise', 0);
+  init_max_data.set('association', 0);
+  const [MaxData, setMaxData] = React.useState(init_max_data);
 
   const onPieEnter = (_, index) => {
     setactiveIndex(index);
@@ -203,7 +111,6 @@ export const Statistics = () => {
     setChartType(newChartType);
   }
   const handleDataTypeChange = (e, newDataType) => {
-    let data = overall_data.get(newDataType);
     setDataType(newDataType);
   }
 
@@ -222,6 +129,19 @@ export const Statistics = () => {
       },
     },
   }));
+
+  useEffect(() => {
+    (async () => {
+      try {
+        console.log("useEffect called");
+        const {overall_data, max_data} = await getData();
+        setOverallData(overall_data);
+        setMaxData(max_data);
+      } catch (e) {
+        //TODO: handle exception
+      }
+    })();
+  }, [type]);
 
   return (
     <React.Fragment>
@@ -268,8 +188,8 @@ export const Statistics = () => {
           <Pie
             activeIndex={activeIndex}
             activeShape={renderActiveShape}
-            data={overall_data.get(DataType).filter(data => data.count > 0 && 
-                                                    data.count > (max_data.get(DataType) * 0.01))
+            data={OverallData.get(DataType).filter(data => data.count > 0 && 
+                                                    data.count > (MaxData.get(DataType) * 0.01))
                                             .sort((data1, data2) => data2.count - data1.count)}
             cx="50%"
             cy="50%"
@@ -279,7 +199,7 @@ export const Statistics = () => {
             dataKey="count"
             onMouseEnter={onPieEnter}
           >
-            {overall_data.get(DataType).map((entry, index) => (
+            {OverallData.get(DataType).map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
@@ -289,8 +209,8 @@ export const Statistics = () => {
             <BarChart
               width={600}
               height={300}
-              data={overall_data.get(DataType).filter(data => data.count > 0 && 
-                                                      data.count > (max_data.get(DataType) * 0.01))
+              data={OverallData.get(DataType).filter(data => data.count > 0 && 
+                                                      data.count > (MaxData.get(DataType) * 0.01))
                                               .sort((data1, data2) => data2.count - data1.count)}
               margin={{
                 top: 5,
@@ -301,7 +221,7 @@ export const Statistics = () => {
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey='province' />
-              <YAxis />
+              <YAxis dataKey='count'/>
               <Tooltip labelStyle={{color: 'black'}}/>
               <Bar dataKey="count" fill="#8884d8" />
             </BarChart>
