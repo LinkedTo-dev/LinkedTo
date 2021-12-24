@@ -15,6 +15,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import {typeContext} from './DashboardBox';
 import { IndTypes } from './static';
+import { fetchData } from '../utils/fetch';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -22,7 +23,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function Specialist() {
   const type = React.useContext(typeContext);
-  const data = require('../../mock/specialist.json').filter((item) => item.industryType === IndTypes[type].name);
+  const mock_data = require('../../mock/specialist.json').filter((item) => item.industryType === IndTypes[type].name);
+
+  const [data, setData] = React.useState([]);
 
   const [open, setOpen] = React.useState(false);
   const [intro, setIntro] = React.useState('');
@@ -46,6 +49,23 @@ export default function Specialist() {
     });
     setFilterData(result);
   }
+
+  React.useEffect(() => {
+    (async () => {
+      try {
+        console.log("here");
+        const x = await fetchData('/specialist', { type });
+        console.log("here");
+        console.log(x);
+        console.log(mock_data);
+        setData(x.filter((item) => item.industryType === IndTypes[type].name));
+        setFilterData(x.filter((item) => item.industryType === IndTypes[type].name));
+      } catch (e) {
+        //TODO: handle exception
+        console.log(e);
+      }
+    })();
+  }, [type]);
 
   return (
     <div>
