@@ -10,4 +10,8 @@ module.exports = {
   siteMetadata: {
     title: 'My page',
   },
+  proxy: {
+    prefix: '/api',
+    url: 'http://47.240.9.220:1323',
+  },
 };
