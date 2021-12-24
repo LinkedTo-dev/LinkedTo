@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { ToggleButtonGroup, ToggleButton, Paper, Divider } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { PieChart, Pie, Sector, ResponsiveContainer, Cell } from 'recharts';
+import { PieChart, Pie, Sector, BarChart, Bar, Cell, 
+        XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
 
 const mockData = [
     {"province":"AH","count_type":"enterprise","count":11},
@@ -109,24 +110,34 @@ const mockData = [
 ]
 
 const getData = (allData: Array<object>) => {
-  const parsed_data = new Map();
+  const overall_data = new Map();
+  const max_data = new Map();
+  max_data.set('park', 0);
+  max_data.set('enterprise', 0);
+  max_data.set('association', 0);
   const park_data = new Array();
   const enterprise_data = new Array();
   const assoc_data = new Array();
   for (let i = 0; i < allData.length; i++){
     if (allData[i]['count_type'] === 'park'){
       park_data.push({province: allData[i]['province'], count: allData[i]['count']});
+      if (allData[i]['count'] > max_data.get('park')) 
+        max_data.set('park', allData[i]['count']);
     } else if (allData[i]['count_type'] === 'enterprise'){
       enterprise_data.push({province: allData[i]['province'], count: allData[i]['count']});
+      if (allData[i]['count'] > max_data.get('enterprise')) 
+        max_data.set('enterprise', allData[i]['count']);
     } else {
       assoc_data.push({province: allData[i]['province'], count: allData[i]['count']});
+      if (allData[i]['count'] > max_data.get('association')) 
+        max_data.set('association', allData[i]['count']);
     }
   }
-  parsed_data.set('park', park_data);
-  parsed_data.set('enterprise', enterprise_data);
-  parsed_data.set('association', assoc_data);
+  overall_data.set('park', park_data);
+  overall_data.set('enterprise', enterprise_data);
+  overall_data.set('association', assoc_data);
   console.log('parsed_data');
-  return parsed_data;
+  return {overall_data, max_data};
 }
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
@@ -177,23 +188,21 @@ const renderActiveShape = (props) => {
   );
 };
 
-const overall_data = getData(mockData);
+const {overall_data, max_data} = getData(mockData);
 
 export const Statistics = () => {
-  const onPieEnter = (_, index) => {
-    setactiveIndex(index);
-  };
-
   const [DataType, setDataType] = React.useState('enterprise');
   const [activeIndex, setactiveIndex] = React.useState(0);
   const [ChartType, setChartType] = React.useState('PieChart');
 
+  const onPieEnter = (_, index) => {
+    setactiveIndex(index);
+  };
+
   const handleChartTypeChange = (e, newChartType) => {
-    console.log()
     setChartType(newChartType);
   }
   const handleDataTypeChange = (e, newDataType) => {
-    console.log()
     let data = overall_data.get(newDataType);
     setDataType(newDataType);
   }
@@ -254,11 +263,14 @@ export const Statistics = () => {
         </StyledToggleButtonGroup>
       </Paper>
       {/* <ResponsiveContainer width="100%" height="100%"> */}
-        <PieChart width={500} height={500}>
+      { ChartType === "PieChart" && 
+        (<PieChart width={500} height={500}>
           <Pie
             activeIndex={activeIndex}
             activeShape={renderActiveShape}
-            data={overall_data.get(DataType)}
+            data={overall_data.get(DataType).filter(data => data.count > 0 && 
+                                                    data.count > (max_data.get(DataType) * 0.01))
+                                            .sort((data1, data2) => data2.count - data1.count)}
             cx="50%"
             cy="50%"
             innerRadius={80}
@@ -271,7 +283,30 @@ export const Statistics = () => {
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
-        </PieChart>
+        </PieChart>)}
+        { ChartType === 'BarChart' &&
+          (
+            <BarChart
+              width={600}
+              height={300}
+              data={overall_data.get(DataType).filter(data => data.count > 0 && 
+                                                      data.count > (max_data.get(DataType) * 0.01))
+                                              .sort((data1, data2) => data2.count - data1.count)}
+              margin={{
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey='province' />
+              <YAxis />
+              <Tooltip labelStyle={{color: 'black'}}/>
+              <Bar dataKey="count" fill="#8884d8" />
+            </BarChart>
+          )
+        }
       {/* </ResponsiveContainer> */}
     </React.Fragment>
   )
