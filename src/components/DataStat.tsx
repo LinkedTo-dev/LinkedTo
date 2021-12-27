@@ -83,7 +83,7 @@ const DataStat = () => {
         //TODO: handle exception
       }
     })();
-  }, []);
+  }, [type]);
   const allProvince = [...new Set(statData.map((stat, idx) => stat.province))];
 
   const handleChange = (event: SelectChangeEvent) => {

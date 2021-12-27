@@ -6,6 +6,7 @@ import { styled } from '@mui/material/styles';
 import { PieChart, Pie, Sector, BarChart, Bar, Cell, 
         XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from 'recharts';
 import { fetchData } from '../utils/fetch';
+import { IndTypes } from './static';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
@@ -57,7 +58,7 @@ const renderActiveShape = (props) => {
 
 export const Statistics = () => {
   const getData = async () => {
-    const allData = await fetchData<Array<object>>('/mapStatistic', {type});
+    const allData = await fetchData<Array<object>>('/mapStatistic', {industryType: IndTypes[type].name});
     console.log(allData);
     const overall_data = new Map();
     const max_data = new Map();

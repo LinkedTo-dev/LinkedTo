@@ -73,7 +73,7 @@ interface IndTypeProp {
 
 const IndTypes: IndTypeProp[] = [
   { id: 0, name: 'AI', label: '人工智能', icon: <DashboardIcon /> },
-  { id: 1, name: 'Blockchain', label: '区块链', icon: <DashboardIcon /> },
+  { id: 1, name: 'BC', label: '区块链', icon: <DashboardIcon /> },
 ];
 
 export default staticData;

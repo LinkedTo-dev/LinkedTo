@@ -54,7 +54,7 @@ export default function Specialist() {
     (async () => {
       try {
         console.log("here");
-        const x = await fetchData('/specialist', { type });
+        const x = await fetchData('/specialist', { industryType: IndTypes[type].name });
         console.log("here");
         console.log(x);
         console.log(mock_data);
