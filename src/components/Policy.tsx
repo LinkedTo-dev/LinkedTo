@@ -21,7 +21,7 @@ const dataMap = (data : any) => {
       <>
         <ListItem alignItems="flex-start">
           <ListItemAvatar>
-            <Avatar alt="Remy Sharp" src="/xxxxx/1.jpg" />
+            <Avatar alt="Policy" />
           </ListItemAvatar>
   
           <ListItemText
@@ -68,7 +68,7 @@ const Policy = () => {
         //TODO: handle exception
       }
     })();
-  }, []);
+  }, [type]);
 
 
 

@@ -24,7 +24,7 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Switch from '@mui/material/Switch';
 import { fetchData } from '../utils/fetch';
-import {IndTypes} from './static';
+import { IndTypes } from './static';
 import { typeContext } from './DashboardBox';
 
 export const abbr2prov = [
@@ -65,7 +65,6 @@ export const abbr2prov = [
 ];
 
 const DataStat = () => {
-
   const [province, setProvince] = React.useState('');
   const [quarterData, setQuarterData] = React.useState([]);
 
@@ -77,8 +76,12 @@ const DataStat = () => {
   React.useEffect(() => {
     (async () => {
       try {
-        setStatData(await fetchData('/dataStatistic', {industryType: IndTypes[type].name}));
-
+        const _statData: any = await fetchData('/dataStatistic', {
+          industryType: IndTypes[type].name,
+        });
+        setStatData(_statData);
+        setQuarterData(statData.filter((stat) => stat.province === province));
+        setChecked(false);
       } catch (e) {
         //TODO: handle exception
       }
@@ -142,7 +145,9 @@ const DataStat = () => {
               return t.abbr.toUpperCase() === p.toUpperCase();
             });
             return (
-              <MenuItem key={idx} value={p}>{filtered ? filtered.full : p}</MenuItem>
+              <MenuItem key={idx} value={p}>
+                {filtered ? filtered.full : p}
+              </MenuItem>
             );
           })}
         </Select>
@@ -163,7 +168,5 @@ const DataStat = () => {
     </>
   );
 };
-
-
 
 export default DataStat;

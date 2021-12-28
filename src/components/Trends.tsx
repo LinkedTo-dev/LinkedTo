@@ -36,7 +36,7 @@ const dataMap = (data: any) => {
       <>
         <ListItem alignItems="flex-start">
           <ListItemAvatar>
-            <Avatar alt="Remy Sharp" src="/xxxxx/1.jpg" />
+            <Avatar alt="News" />
           </ListItemAvatar>
 
           <ListItemText
@@ -82,7 +82,7 @@ const Trends = () => {
         //TODO: handle exception
       }
     })();
-  }, []);
+  }, [type]);
 
   const updData = (e) => {
     const _input = e.target.value;
