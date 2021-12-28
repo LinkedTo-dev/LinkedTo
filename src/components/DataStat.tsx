@@ -153,6 +153,7 @@ const DataStat = () => {
         </Select>
       </FormControl>
       <Switch checked={checked} onChange={handleCheck} />
+      <Box>季度/年度产值</Box>
       <BarChart
         width={400}
         height={250}
