@@ -135,11 +135,6 @@ function DashboardContent({ mainList, secondaryList, children }) {
             >
               LinkedTo
             </Typography>
-            <IconButton color='inherit'>
-              <Badge badgeContent={4} color='secondary'>
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
             <Link component={GatsbyLink} to='/login'>
               <IconButton color='inherit'>
                 <LoginIcon sx={{ color: '#fff' }} />
